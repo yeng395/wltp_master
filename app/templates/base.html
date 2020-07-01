@@ -1,0 +1,134 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+    Welcome to WLTP
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" id="home" href="{{ url_for('calculate') }}">WLTP Optimization</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a id="about" href="{{ url_for('about') }}">About</a></li>
+            <li><a id="create-scenario" href="{{ url_for('createscenario_start') }}">Create Scenario</a></li>
+            <li><a href="#" id="help-menu" onclick="help()">Help!</a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+
+    var popOverVisible = false;
+
+    function help() {
+
+        var doShow = popOverVisible ? 'hide' : 'show';
+        if (popOverVisible) {
+            d3.select("#help-menu").html("Help!");
+            d3.select(".fadeMe").remove();
+        } else {
+            d3.select("body").append("div").classed("fadeMe",true)
+            .on("click",function(){help();});
+            d3.select("#help-menu").html("Hide help");
+        }
+        popOverVisible = !popOverVisible;
+        $("#create-scenario").popover({
+            'content' : 'Click here to create new data sets',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#about").popover({
+            'content' : 'Click here to learn about the problem',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#calculate").popover({
+            'content' : 'Click here to calculate the optimal result with the chosen input data',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#show").popover({
+            'content' : 'Click here to show the input data of the chosen scenarios',
+            'trigger':'manual',
+            'placement':'right',
+        }).popover(doShow);
+        $("#editDataoption1").popover({
+            'content' : 'Click here to edit the input data of this scenario',
+            'trigger':'manual',
+            'placement':'right',
+        }).popover(doShow);
+        $("#editDataoption2").popover({
+            'content' : 'Click here to edit the input data of this scenario',
+            'trigger':'manual',
+            'placement':'right',
+        }).popover(doShow);
+        $("#home").popover({
+            'content' : 'Go Back to the start page',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#create").popover({
+            'content' : 'Create your own scenario based on existing input data',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#createNew").popover({
+            'content' : 'Create your own scenario with self chosen parameters',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#editData1").popover({
+            'content' : 'Click here to edit the input data of this scenario',
+            'trigger':'manual',
+            'placement':'right',
+        }).popover(doShow);
+        $("#editData2").popover({
+            'content' : 'Click here to edit the input data of this scenario',
+            'trigger':'manual',
+            'placement':'right',
+        }).popover(doShow);
+        $("#colorselector").popover({
+            'content' : 'Click here to select the input data of one scenario you want to see.',
+            'trigger':'manual',
+            'placement':'bottom',
+        }).popover(doShow);
+        $("#capacitySite").popover({
+            'content' : 'Open capacity of the available sites.',
+            'trigger':'manual',
+            'placement':'top',
+        }).popover(doShow);
+        $("#domain").popover({
+            'content' : 'Domain utilization for this descision variable. Range from minimal possible value (0%) to maximal possible value (100%).',
+            'trigger':'manual',
+            'placement':'top',
+        }).popover(doShow);
+    }
+</script>
+{% endblock %}
+
+{% block styles %}
+        {{super()}}
+        <link rel="stylesheet" href="{{ url_for('static', filename='wltpstyle_40.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
