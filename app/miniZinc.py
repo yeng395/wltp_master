@@ -157,7 +157,7 @@ def getoptimumChangePerProductNeg(r, d):
 
 def saveDataFile(data, name_file):
     d = data
-    save_path = '/Users/Yannick/Documents/Uni Augsburg/Git/untitled/app/DataFiles/'
+    save_path = '/app/app/DataFiles/'
     name_of_file = name_file
     completeName = os.path.join(save_path, name_of_file+".dzn")
 
