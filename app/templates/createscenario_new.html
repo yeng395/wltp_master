@@ -48,6 +48,18 @@
               alert("Parameters must be bigger than 0");
               return false;
           }
+          if (parseInt(products) > 12 ) {
+              alert("Not more than 12 Products");
+              return false;
+          }
+          if (parseInt(sites) > 8 ) {
+              alert("Not more than 8 Sites");
+              return false;
+          }
+          if (parseInt(customers) > 8 ) {
+              alert("Not more than 8 Customers");
+              return false;
+          }
          if (!isNaN(products) && products.toString().indexOf('.') != -1) {
               alert("Products must be an Integer");
               return false;
