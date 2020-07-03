@@ -1,8 +1,0 @@
-{
-  "id" : "org.coin-or.couenne",
-  "name" : "Couenne",
-  "executable" : "/couenne-linux64/couenne",
-  "version": "0.5.7",
-  "supportsFzn":false,
-  "supportsNL":true
-}
