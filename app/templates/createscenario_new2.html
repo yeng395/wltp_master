@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<form name="formNew" action="" onsubmit="return validateForm()" method="POST" novalidate xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="o_create1" style="padding-left: 20px;">
+                <div class="jumbotron" style="margin-left:-100px;">
+                    <div class="row">
+                        <h2>Parameter des neuen Modells</h2>
+                        </br>
+                        <div class="col-md-6">
+                            <table class="table" width="600px">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;" scope="col" width="300px">Parameter</th>
+                                    <th style="text-align: left; font-size: 14px;" scope="col"># Number</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;" scope="row">Name of the new Scenarios</th>
+                                    <td><input class="input_edit" style="text-align: left; font-size: 14px;" type="text" id="nameScenario" name="nameScenario"
+                                                   value=""></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;" scope="row" >Products</th>
+                                    <td style="text-align: left; font-size: 14px;" >{{ input['nproducts'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;" scope="row">Sites</th>
+                                    <td style="text-align: left; font-size: 14px;" > {{ input['nsites'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;"  scope="row">Demand Countries</th>
+                                    <td style="text-align: left; font-size: 14px;" >{{ input['ncustomers']  }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 14px;" scope="row">Fine per g Co2/km</th>
+                                    <td><input class="input_edit" style="text-align: left; font-size: 14px;" type="text" id="payperfine" name="payperfine"
+                                                   value=""></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                    </br>
+                    <div class="row">
+                        <div class="col">
+                            <div style="overflow-x:auto;">
+                                <h4>Profit Contribution</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        {% for c in input['cname'] %}
+                                        <th scope="col">{{ c }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for p in input['pname'] %} {% set i = loop.index - 1%}
+                                    <tr>
+                                        <th scope="row">{{ p }}</th>
+                                        {% for j in range(0,input['ncustomers']) %}
+                                        <td><input class="input_edit" type="text"  id="eb_{{ j }}_{{i}}" name="eb_{{ j }}_{{i}}"
+                                                   value=""></td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div style="overflow-x:auto;">
+                                <h4>Demand</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        {% for c in input['cname'] %}
+                                        <th scope="col">{{ c }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for p in input['pname'] %} {% set i = loop.index - 1%}
+                                    <tr>
+                                        <th scope="row">{{ p }}</th>
+                                        {% for j in range(0,input['ncustomers']) %}
+                                        <td><input class="input_edit" type="text" id="demand_{{ j }}_{{i}}"
+                                                   name="demand_{{ j }}_{{i}}" value="">
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>Excess Demand per Product </h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% for p in input['pname'] %}
+                                    <th scope="col">{{p}}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    {% for p in input['pname'] %} {% set i = loop.index - 1%}
+                                    {% set i = loop.index - 1%}
+                                    <td><input class="input_edit" type="text" id="excessdemand_{{i}}" name="excessdemand_{{i}}"
+                                               value=""></td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>Supercredit per Product </h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% for p in input['pname'] %}
+                                    <th scope="col">{{p}}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    {% for p in input['pname'] %} {% set i = loop.index - 1%}
+                                    {% set i = loop.index - 1%}
+                                    <td><input class="input_edit" type="text" id="supercredit_{{i}}" name="supercredit_{{i}}"
+                                               value=""></td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>Max Production per Site </h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Site</th>
+                                    <th scope="col">Number</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for s in input['sname'] %}
+                                {% set i = loop.index - 1%}
+                                <tr>
+                                    <th scope="row">{{s}}</th>
+                                    <td><input class="input_edit"  type="text" id="maxProduction_{{i}}"
+                                               name="maxProduction_{{i}}" value="">
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col">
+                            <div style="overflow-x:auto;">
+                                <h4>Production Plan</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        {% for p in input['pname'] %}
+                                        <th scope="col">{{ p }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for s in input['sname'] %} {% set j = loop.index - 1%}
+                                    <tr>
+                                        <th scope="row">{{ s }}</th>
+                                        {% for i in range(0,input['nproducts']) %}
+                                        <td><input class="input_edit" type="text" id="productionPlan_{{ j }}_{{i}}"
+                                                   name="productionPlan_{{ j }}_{{i}}" value="">
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>WLTP Value per Car </h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% for p in input['pname'] %}
+                                    <th scope="col">{{ p }}</th>
+                                    {% endfor %}
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    {% for j in range(0,input['nproducts']) %}
+                                    <td><input class="input_edit"  type="text" id="emissionWLTP_{{j}}" name="emissionWLTP_{{j}}"
+                                               value=""></td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4>Weight per Car </h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% for p in input['pname'] %}
+                                    <th scope="col">{{p}}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    {% for p in input['pname'] %}
+                                    {% set i = loop.index - 1%}
+                                    <td><input class="input_edit" type="text" id="weight_{{i}}" name="weight_{{i}}"
+                                               value=""></td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-default" id="saveData" name="saveData" type="submit"
+                               value="Save Data as new Scenario">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        function validateForm() {
+          var x = document.forms["formNew"]["nameScenario"].value;
+          var eb = document.forms["formNew"]["eb_0_0"].value;
+          var excessdemand = document.forms["formNew"]["excessdemand_0"].value;
+          var payperfine = document.forms["formNew"]["payperfine"].value;
+          if (x == "") {
+            alert("Name must be filled out");
+            return false;
+          }
+
+          if (parseInt(payperfine) <= 0) {
+               alert("Pay per fine must be bigger than 0");
+               return false;
+          }
+          if (payperfine == "") {
+              alert("Pay per fine must be filled");
+              return false;
+          }
+          if (!isNaN(payperfine) && payperfine.toString().indexOf('.') != -1) {
+              alert("Pay per fine must be an Integer");
+              return false;
+          }
+
+          for (let k=0; k< {{input['nsites']}}; k++ ) {
+              c = k.toString();
+              maxProduction = document.forms["formNew"]["maxProduction_" + c].value;
+              if (parseInt(maxProduction) <= 0) {
+                    alert("Max Production must be bigger than 0");
+                    return false;
+              }
+              if (maxProduction == "") {
+                 alert("Max Production must be filled");
+                 return false;
+              }
+              if (!isNaN(maxProduction) && maxProduction.toString().indexOf('.') != -1) {
+                 alert("Max Production must be an Integer");
+                 return false;
+              }
+
+              for ( let l=0; l< {{input['nproducts']}}; l++ ) {
+              d = l.toString();
+              productionPlan = document.forms["formNew"]["productionPlan_"+ c+ "_" + d].value;
+              if (parseInt(productionPlan) < 0 || parseInt(productionPlan) > 1) {
+                    alert("Production Plan must be 1 or 0");
+                    return false;
+                  }
+                  if (productionPlan == "") {
+                    alert("Production Plan must be filled");
+                    return false;
+                  }
+                  if ((!isNaN(productionPlan) && productionPlan.toString().indexOf('.') != -1)) {
+                    alert("Production Plan must be an integer");
+                    return false;
+                  }
+               }
+          }
+
+          for ( let i=0; i< {{input['nproducts']}}; i++ ) {
+              a = i.toString();
+              excessdemand = document.forms["formNew"]["excessdemand_" + a].value;
+              supercredit = document.forms["formNew"]["supercredit_" + a].value;
+              emissionWLTP = document.forms["formNew"]["emissionWLTP_" + a].value;
+              weight = document.forms["formNew"]["weight_" + a].value;
+
+                  if (parseInt(weight) <= 0) {
+                    alert("Weight must be bigger than 0");
+                    return false;
+                  }
+                  if (weight == "") {
+                    alert("Weight must be filled");
+                    return false;
+                  }
+                  if ((!isNaN(weight) && weight.toString().indexOf('.') != -1)) {
+                    alert("Weight must be an integer");
+                    return false;
+                  }
+
+
+                  if (parseInt(emissionWLTP) < 0) {
+                    alert("Emission WLTP must be bigger than 0");
+                    return false;
+                  }
+                  if (emissionWLTP == "") {
+                    alert("Emission WLTP  must be filled");
+                    return false;
+                  }
+                  if ((!isNaN(emissionWLTP) && emissionWLTP.toString().indexOf('.') != -1)) {
+                    alert("Emission WLTP must be an integer");
+                    return false;
+                  }
+
+
+                  if (parseFloat(supercredit) < 1.0) {
+                    alert("Supercredit must be between 1.0 and 2.0");
+                    return false;
+                  }
+                  if (parseFloat(supercredit) > 2.0) {
+                    alert("Supercredit must be smaller than 2.0");
+                    return false;
+                  }
+                  if (supercredit == "") {
+                    alert("Supercredit must be filled");
+                    return false;
+                  }
+                  if (!(!isNaN(supercredit) && supercredit.toString().indexOf('.') != -1)) {
+                    alert("Supercredit must be a float");
+                    return false;
+                  }
+
+                  if (excessdemand == "") {
+                    alert("Excessdemand must be filled");
+                    return false;
+                  }
+                  if (parseFloat(excessdemand) <= 1.0) {
+                    alert("Excessdemand must be higher than 1.0");
+                    return false;
+                  }
+                  if (!(!isNaN(excessdemand) && excessdemand.toString().indexOf('.') != -1)) {
+                    alert("excessdemand must be a float");
+                    return false;
+                  }
+
+              for ( let j=0; j< {{input['ncustomers']}}; j++ ) {
+                  b = j.toString();
+                  eb = document.forms["formNew"]["eb_"+ b + "_" + a].value;
+                  demand = document.forms["formNew"]["demand_"+ b + "_" + a].value;
+                  if (parseInt(eb) < -1000) {
+                    alert("Profit must be between -1000 and + 100000");
+                    return false;
+                  }
+                  if (eb == "") {
+                    alert("Profit must be filled");
+                    return false;
+                  }
+                  if (!isNaN(eb) && eb.toString().indexOf('.') != -1) {
+                    alert("Profit must be an integer");
+                    return false;
+                  }
+                  if (parseInt(demand) <= 0) {
+                    alert("Demand must be > 0");
+                    return false;
+                  }
+                  if (demand == "") {
+                    alert("Demand must be filled");
+                    return false;
+                  }
+                  if (!isNaN(demand) && eb.toString().indexOf('.') != -1) {
+                    alert("Demand must be an integer");
+                    return false;
+                  }
+              }
+          }
+        }
+    </script>
+</form>
+{% endblock %}
